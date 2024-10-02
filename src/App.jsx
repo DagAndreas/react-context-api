@@ -8,6 +8,7 @@ import user from "./assets/data/user.js";
 import { createContext } from "react";
 
 const TwitterContext = createContext();
+const ThemeContext = createContext();
 
 function App() {
   const [tweets, setTweets] = useState(defaultTweets);
@@ -20,16 +21,16 @@ function App() {
   }, [theme]);
 
   return (
-    <TwitterContext.Provider
-      value={{ tweets, setTweets, setTheme, user, theme }}
-    >
-      <div className="container">
-        <Header />
-        <Tweets />
-        <RightSide />
-      </div>
-    </TwitterContext.Provider>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <TwitterContext.Provider value={{ tweets, setTweets, user }}>
+        <div className="container">
+          <Header />
+          <Tweets />
+          <RightSide />
+        </div>
+      </TwitterContext.Provider>
+    </ThemeContext.Provider>
   );
 }
 
-export { App, TwitterContext };
+export { App, TwitterContext, ThemeContext };
